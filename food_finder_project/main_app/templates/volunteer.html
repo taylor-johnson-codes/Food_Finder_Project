@@ -4,17 +4,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
+    <title>Hello, world!</title>
+    {% load static %}	
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <title>Food Bank Finder</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
-            <a class="navbar-brand" href="index.html">Food Bank Finder</a>
+            <a class="navbar-brand" href="/">Food Bank Finder</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="">Mission</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Volunteer</a>
+                        <a class="nav-link" href="/volunteer">Volunteer</a>
                     </li>
                 </ul>
             </div>
@@ -43,15 +43,15 @@
         </div>
         <div id="Volunteer_login_registration" class="row">
             <div class="col-md-6 box">
-                <form action="/register" method="POST">
+                <form action="/registration" method="POST">
                     <!-- {% csrf_token %} -->
-                    <a href="registration.html">Join Volunteer Network</a>
+                    <a href="/registration">Join Volunteer Network</a>
                 </form>
             </div>
             <div class="col-md-6 box">
                 <form action="/login" method="POST">
                     <!-- {% csrf_token %} -->
-                    <a href="login.html">Login to Volunteer Network</a>
+                    <a href="/login">Login to Volunteer Network</a>
                 </form>
             </div>
         </div>
