@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <title>Food Bank Finder</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-fixed-top">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
             <a class="navbar-brand" href="index.html">Food Bank Finder</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,42 +27,32 @@
                         <a class="nav-link" href="">Mission</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="volunteer.html">Volunteer</a>
+                        <a class="nav-link" href="">Volunteer</a>
                     </li>
                 </ul>
             </div>
         </nav>
 
-        <section id="main_title">
-            <div>
 
+        <div id="volunteer_title">
+            <h1>Becoming a Volunteer</h1>
+        </div>
+        <div class="important_notice">
+            <h3>Important Notice Regarding COVID-19</h3>
+            <p>Our need for volunteers is constant and continues to evolve as we navigate this health crisis. Please rest assured that we are working with public health officials to help keep local communities and our volunteer safe. </p>
+        </div>
+        <div id="Volunteer_login_registration" class="row">
+            <div class="col-md-6 box">
+                <form action="/register" method="POST">
+                    <!-- {% csrf_token %} -->
+                    <a href="registration.html">Join Volunteer Network</a>
+                </form>
             </div>
-        </section>
-
-        <div id="search" class="row">
-            <div class="col-md-6">
-                <h3>Find your local food bank</h3>
-            </div>
-            <div class="col-md-6">
-                <form action="" method="POST">
-                    <label for="zip_code">Zip Code</label>
-                    <input type="text" id="zip_code" name="zip_code">
-                    <button type="submit">Search</button>
+            <div class="col-md-6 box">
+                <form action="/login" method="POST">
+                    <!-- {% csrf_token %} -->
+                    <a href="login.html">Login to Volunteer Network</a>
                 </form>
             </div>
         </div>
-
-        <div id="location" class="row">
-            <div id="map" class="col-lg-6">
-
-            </div>
-            <div id="fblist" class="col-lg-6">
-
-            </div>
-        </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     </body>
-</html>
