@@ -5,3 +5,7 @@ import bcrypt
 
 def index(request):
     return render(request, 'index.html')
+
+def volunteer(request):
+    return render(request, 'volunteer.html')
+
