@@ -9,3 +9,11 @@ def index(request):
 def volunteer(request):
     return render(request, 'volunteer.html')
 
+def login(request):
+    return render(request, 'login.html')
+
+def registration(request):
+    return render(request, 'registration.html')
+
+def profile(request):
+    return render(request, 'profile.html')
