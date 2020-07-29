@@ -36,11 +36,20 @@
                 <div class="row profile_row">
                     <div class="col-md-4">
                         <div class="profile-img">
+                            <!-- we want this default image to appear when the user hasn't uploaded a picture yet, not sure how to do that -->
                             <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
-                            </div>
+                            <!-- this code will replace the default picture: -->
+                            <!-- <img src="{{MEDIA_URL}}{{user.image}}" alt="image"> -->
+                            <!-- CSS will need something like img{ width: 200px; } -->
+                            
+                            <form action="/change_picture" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="file btn btn-lg btn-primary">
+                                    Change Photo
+                                </div>
+                                <!-- the input line is supposed to create a 'choose file' button -->
+                                <input type="file" name="upload_image">
+                            </form>
                         </div>
                     </div>
                     <div class="col-md-6">
