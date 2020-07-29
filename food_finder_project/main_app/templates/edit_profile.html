@@ -15,17 +15,17 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
-            <a class="navbar-brand" href="">Welcome, Name!</a>
+            <a class="navbar-brand" href="">{{ user.first_name }} - Edit Your Info</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="">Upcoming Event</a>
+                        <a class="nav-link" href="/profile">Back to Profile Page</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Back to Profile Page</a>
+                        <a class="nav-link" href="/logout">Log out</a>
                     </li>
                 </ul>
             </div>
@@ -45,28 +45,45 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h2>
-                                        {{ user.first_name }} {{ user.last_name }}
-                                    </h2>
-                                    <h3>
-                                        Seattle Volunteer
-                                    </h3>
-                                    <p class="proile-rating">Availability : <span>Monday - Friday</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                                </li>
+                            <ul class="messages">    
+                                {% for message in messages %}   
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>  
+                                {% endfor %}
+                            </ul>
+                            <form action="/update_profile" method="POST" id="edit_form">
+                                {% csrf_token %}
+                                <div class="edit_row">
+                                    <h3>First Name: </h3>
+                                    <input type="text" name="first_name" id="edit_input" value="{{ user.first_name }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Last Name: </h3>
+                                    <input type="text" name="last_name" id="edit_input" value="{{ user.last_name }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Email: </h3>
+                                    <input type="email" name="email" id="edit_input" value="{{ user.email }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Phone: </h3>
+                                    <input type="text" name="phone" id="edit_input" value="{{ user.phone }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Zip Code: </h3>
+                                    <input type="text" name="zipcode" id="edit_input" value="{{ user.zipcode }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>New Password: </h3>
+                                    <input type="password" name="password" id="edit_input" value="{{ user.password }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Confirm New Password: </h3>
+                                    <input type="password" name="confirm_password" id="edit_input" value="{{ user.password }}">
+                                </div>
+                                <button class="btn btn-lg btn-secondary btn-block text-uppercase edit_btn" type="submit">Update</button>
+                            </form>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <form action="/edit_profile" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                        </form>
                     </div>
                 </div>
                 </div>
