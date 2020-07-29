@@ -26,7 +26,7 @@ def register(request):
         zipcode = request.POST['zipcode']
         password = request.POST['password']
         pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        new_user = User.objects.create(first_name=first_name, last_name=last_name, email=email, password=pw_hash)
+        new_user = User.objects.create(first_name=first_name, last_name=last_name, email=email, phone=phone, zipcode=zipcode, password=pw_hash)
         request.session['user_id'] = new_user.id
         return redirect('/profile')
 
