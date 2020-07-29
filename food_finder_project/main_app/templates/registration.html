@@ -40,8 +40,15 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">Register</h5>
+                    {% if messages %}
+                    <ul class="messages">    
+                        {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>  
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                     <form class="form-signin" action="/register" method="POST">
-                        
+                        {% csrf_token %}
                         <div class="form-label-group">
                             <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required autofocus>
                             <label for="inputUserame">First Name</label>
