@@ -50,10 +50,12 @@
                     <form class="form-signin" action="/register" method="POST">
                         {% csrf_token %}
                         <div class="form-label-group">
+                            
                             <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required autofocus>
                             <label for="inputUserame">First Name</label>
                         </div>
                         <div class="form-label-group">
+                            
                             <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" required>
                             <label for="inputUserame">Last Name</label>
                         </div>
@@ -62,7 +64,7 @@
                             <label for="inputEmail">Email address</label>
                         </div>
                         <div class="form-label-group">
-                            <input type="text" name="phone" id="inputphone" class="form-control" placeholder="phone" required autofocus>
+                            <input type="text" name="phone" id="inputphone" class="form-control" placeholder="phone" required>
                             <label for="inputPhone">Phone Number</label>
                         </div>
                         <div class="form-label-group">
@@ -72,12 +74,12 @@
                         <hr>
     
                         <div class="form-label-group">
-                            <input type="password" name="passwod" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                             <label for="inputPassword">Password</label>
                         </div>
                         
                         <div class="form-label-group">
-                            <input type="password" name="confirm_passwod" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                            <input type="password" name="confirm_password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
                             <label for="inputConfirmPassword">Confirm password</label>
                         </div>
     
