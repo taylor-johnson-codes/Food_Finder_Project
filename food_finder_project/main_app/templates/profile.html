@@ -39,16 +39,9 @@
                 <div class="row profile_row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                <label class="custom-upload">
-                                    Change Photo
-                                    <input type="file" name="upload_image" class="form-control"/>
-                                </label>
                             <div class="profile-img">
                                 {% if user.profile_pic.image %}
                                 <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
-                                <!-- doesn't display uploaded picture even though it loaded into the media folder; it say it can't find the media folder, not sure why -->
                                 {% else %}
                                 <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
                                 {% endif %}
@@ -59,14 +52,24 @@
                                             Change Photo
                                             <input type="file" name="upload_image" class="form-control"/>
                                         </label>
-                                        <p>insert file name here; not sure how if form hasn't been submitted yet so nothing has processed yet</p>
                                         <button type="submit">Upload</button>
                                     </form>
                                 </div>
                             </div>
+                            {% endif %}
+                        <div class="file btn btn-lg btn-primary">
+                                <form action="/change_picture" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <label class="custom-upload">
+                                        Change Photo
+                                        <input type="file" name="upload_image" class="form-control"/>
+                                    </label>
+                                    <button type="submit">Upload</button>
+                                </form>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-4">
                         <div class="profile-head">
                                     <h2>
                                         {{ user.first_name }} {{ user.last_name }}

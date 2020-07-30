@@ -102,7 +102,6 @@ class GoogleMapsClient(object):
         if r.status_code not in range(200, 299):
             return {}
         return r.json()
-
     
     def detail(self, place_id="ChIJLfySpTOuEmsRsc_JfJtljdc"):
         detail_base_endpoint = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json"
@@ -117,5 +116,3 @@ class GoogleMapsClient(object):
         if r.status_code not in range(200, 299):
             return {}
         return r.json()
-        
-
