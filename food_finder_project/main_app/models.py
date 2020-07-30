@@ -118,12 +118,5 @@ class GoogleMapsClient(object):
 
         return r.json()
     
-class Upload(models.Model):
-    file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
-    image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-
-    return r.json()
 
