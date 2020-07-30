@@ -40,33 +40,18 @@
                     <div class="col-md-4">
                         <div class="profile-img">
                             <div class="profile-img">
-                                {% if user.profile_pic.image %}
-                                <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
+                                {% if user.profile_pic is None %}
+                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" 
+                                alt=""/>
                                 {% else %}
-                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
+                                <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
                                 {% endif %}
-                                <div class="file btn btn-lg btn-primary">
-                                    <form action="/change_picture" method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <label class="custom-upload">
-                                            Change Photo
-                                            <input type="file" name="upload_image" class="form-control"/>
-                                        </label>
-                                        <button type="submit">Upload</button>
-                                    </form>
-                                </div>
-                            </div>
-                            {% endif %}
-                        <div class="file btn btn-lg btn-primary">
-                                <form action="/change_picture" method="post" enctype="multipart/form-data">
+                                <form action="/edit_profile" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <label class="custom-upload">
-                                        Change Photo
-                                        <input type="file" name="upload_image" class="form-control"/>
-                                    </label>
-                                    <button type="submit">Upload</button>
+                                    <button class="file btn btn-lg btn-info" type="submit">Change Photo</button>                       
                                 </form>
-                        </div>
+
+                            </div>
                     </div>
                     </div>
                     <div class="col-md-4">
