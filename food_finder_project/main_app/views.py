@@ -70,6 +70,9 @@ def profile(request):
         return render(request, 'profile.html', context)
 
 def change_picture(request):
+    this_user = User.objects.get(id=request.session['user_id'])
+    old_pic = Upload.objects.filter(uploaded_by=this_user)
+    old_pic.delete()
     file_name = request.FILES["upload_image"].name
     request.FILES["upload_image"].name = "{}.{}".format(uuid.uuid4().hex, file_name.split(".")[-1])
     image = request.FILES["upload_image"]
