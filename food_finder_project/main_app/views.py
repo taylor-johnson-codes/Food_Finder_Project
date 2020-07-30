@@ -54,11 +54,18 @@ def profile(request):
     if not "user_id" in request.session:
         messages.error(request, "You must be logged in to see your profile.")
         return redirect('/login')
+    
     else:
         user = User.objects.get(id=request.session['user_id'])
+        # check user.profile.len if 0 use dummy. if >0 use
+        if len(user.profile_pic.all()) == 0:
+            pictures = user.profile_pic.all()
+        else:
+            pictures = user.profile_pic.all()[0]
+
         context = {
             'user': user,
-            'picture' : user.profile_pic.all()[0]
+            'picture' : pictures,
         }
         return render(request, 'profile.html', context)
 
@@ -72,9 +79,18 @@ def change_picture(request):
 
 def edit_profile(request):
     user = User.objects.get(id=request.session['user_id'])
+    user = User.objects.get(id=request.session['user_id'])
+        # check user.profile.len if 0 use dummy. if >0 use
+    if len(user.profile_pic.all()) == 0:
+        pictures = user.profile_pic.all()
+    else:
+        pictures = user.profile_pic.all()[0]
+
     context = {
         'user': user,
+        'picture' : pictures,
     }
+
     return render(request, 'edit_profile.html', context)
 
 def update_profile(request):
