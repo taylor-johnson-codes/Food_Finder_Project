@@ -36,6 +36,7 @@ class User(models.Model):
     phone = models.IntegerField()
     zipcode = models.IntegerField()
     password = models.CharField(max_length=100)
+    # profile_pic = picture uploaded by user
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -43,5 +44,6 @@ class User(models.Model):
 class Upload(models.Model):
     file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
     image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
+    uploaded_by = models.ForeignKey(User, related_name="profile_pic", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
