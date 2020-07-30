@@ -56,10 +56,9 @@ def profile(request):
         return redirect('/login')
     else:
         user = User.objects.get(id=request.session['user_id'])
-        pictures = Upload.objects.all()
         context = {
             'user': user,
-            'pictures' : pictures
+            'picture' : user.profile_pic.all()[0]
         }
         return render(request, 'profile.html', context)
 

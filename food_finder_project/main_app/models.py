@@ -44,6 +44,12 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Upload(models.Model):
+    file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
+    image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
+    uploaded_by = models.ForeignKey(User, related_name="profile_pic", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class GoogleMapsClient(object):
     lat = None
@@ -112,10 +118,4 @@ class GoogleMapsClient(object):
             return {}
         return r.json()
         
-class Upload(models.Model):
-    file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
-    image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
-    uploaded_by = models.ForeignKey(User, related_name="profile_pic", on_delete = models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
