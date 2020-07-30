@@ -25,6 +25,9 @@
                         <a class="nav-link" href="">Upcoming Event</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/donate">Donate</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
                 </ul>
@@ -38,8 +41,10 @@
                         <div class="profile-img">
                             <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
                             <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
+                                <label class="custom-upload">
+                                    Change Photo
+                                    <input type="file" name="upload_image" class="form-control"/>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -49,9 +54,9 @@
                                         {{ user.first_name }} {{ user.last_name }}
                                     </h2>
                                     <h3>
-                                        Seattle Volunteer
+                                        Volunteer
                                     </h3>
-                                    <p class="proile-rating">Availability : <span>Monday - Friday</span></p>
+                                    <p class="proile-rating">Email : <span>{{}}</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>

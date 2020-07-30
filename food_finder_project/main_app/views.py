@@ -88,3 +88,6 @@ def update_profile(request):
 def logout(request):
     request.session.clear()
     return redirect('/')
+
+def donate(request):
+    return render(request, 'donate.html')
