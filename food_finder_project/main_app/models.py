@@ -39,10 +39,17 @@ class User(models.Model):
     phone = models.IntegerField()
     zipcode = models.IntegerField()
     password = models.CharField(max_length=100)
+    # profile_pic = picture uploaded by user
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Upload(models.Model):
+    file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
+    image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
+    uploaded_by = models.ForeignKey(User, related_name="profile_pic", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class GoogleMapsClient(object):
     lat = None
@@ -95,7 +102,6 @@ class GoogleMapsClient(object):
         if r.status_code not in range(200, 299):
             return {}
         return r.json()
-
     
     def detail(self, place_id="ChIJLfySpTOuEmsRsc_JfJtljdc"):
         detail_base_endpoint = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json"
@@ -109,6 +115,7 @@ class GoogleMapsClient(object):
         r = requests.get(detail_url)
         if r.status_code not in range(200, 299):
             return {}
+
         return r.json()
     
 class Upload(models.Model):
@@ -116,4 +123,7 @@ class Upload(models.Model):
     image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    return r.json()
 

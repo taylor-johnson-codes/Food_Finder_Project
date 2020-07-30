@@ -58,6 +58,7 @@ def profile(request):
         user = User.objects.get(id=request.session['user_id'])
         context = {
             'user': user,
+            'picture' : user.profile_pic.all()[0]
         }
         return render(request, 'profile.html', context)
 
@@ -65,7 +66,8 @@ def change_picture(request):
     file_name = request.FILES["upload_image"].name
     request.FILES["upload_image"].name = "{}.{}".format(uuid.uuid4().hex, file_name.split(".")[-1])
     image = request.FILES["upload_image"]
-    Upload.objects.create(file_name=file_name, image=image)
+    uploaded_by = User.objects.get(id=request.session['user_id'])
+    Upload.objects.create(file_name=file_name, image=image, uploaded_by=uploaded_by)
     return redirect("/profile")
 
 def edit_profile(request):
@@ -85,7 +87,6 @@ def update_profile(request):
         user = User.objects.get(id=user_id)
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
-        user.email = request.POST['email']
         user.phone = request.POST['phone']
         user.zipcode = request.POST['zipcode']
         user.password = request.POST['password']
@@ -93,9 +94,17 @@ def update_profile(request):
         user.save()
         return redirect('/profile')
 
+def delete(request):
+    user = User.objects.get(id=user_id)
+    user.delete()
+    return redirect('/')
+
 def logout(request):
     request.session.clear()
     return redirect('/')
 
 def search(request):
     return render(request, 'search.html')
+  
+def donate(request):
+    return render(request, 'donate.html')
