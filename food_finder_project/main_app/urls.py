@@ -12,6 +12,7 @@ urlpatterns = [
     path('change_picture', views.change_picture),
     path('edit_profile', views.edit_profile),
     path('update_profile', views.update_profile),
+    path('delete', views.delete),
     path('logout', views.logout),
     path('donate', views.donate),
 ]

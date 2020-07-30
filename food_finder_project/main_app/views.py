@@ -88,13 +88,17 @@ def update_profile(request):
         user = User.objects.get(id=user_id)
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
-        user.email = request.POST['email']
         user.phone = request.POST['phone']
         user.zipcode = request.POST['zipcode']
         user.password = request.POST['password']
         pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         user.save()
         return redirect('/profile')
+
+def delete(request):
+    user = User.objects.get(id=user_id)
+    user.delete()
+    return redirect('/')
 
 def logout(request):
     request.session.clear()
