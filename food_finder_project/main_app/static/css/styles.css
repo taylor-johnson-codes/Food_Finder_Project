@@ -44,13 +44,65 @@ nav li{
     padding: 10px;
 }
 
+#search button{
+    padding: 2px 8px;
+    border-radius: 8px;
+}
+
+#mission{
+    background-color: rgb(197, 176, 168);
+    padding: 30px 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#mission h2{
+    color: white;
+    font-size: 50px;
+}
+
+#mission p{
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif; 
+    color: rgb(121, 99, 87);
+}
+
+.fa-seedling{
+    color: #ffffff;
+}
+
+#location{
+    background-color: rgb(194, 194, 194);
+    padding: 30px;
+}
+
+#contact_us{
+    background-color: #799b96;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#contact_us i{
+    margin: 0px 0px 0px 40px;
+    color: white;
+}
+
+#contact_us h4{
+    color: white;
+}
+
+
+
 #volunteer_title{
     background-color: #324b48;
     background-image: url("volunteer_title_img.jpg");
     background-repeat: no-repeat;
     height: 500px;
     background-size: cover;
-    color: white;
+    color: rgb(214, 214, 214);
     display: flex;
     padding: 30px;
 }
@@ -59,6 +111,11 @@ nav li{
     padding: 30px;
     background-color: #90b6b0;
 }
+
+.important_notice p {
+    font-family: 'Open Sans', sans-serif; 
+}
+
 
 #volunteer_title h1{
     font-size: 60px;
@@ -77,7 +134,7 @@ nav li{
 #Volunteer_login_registration form{
     border-radius: 10px;
     padding: 10px;
-    background-color: #90b6b0;
+    background-color: #bddad5;
     font-size: 40px;
     
 }
@@ -136,6 +193,33 @@ body {
     /* Link to your background image using in the property below! */
     background: scroll center url('https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80');
     background-size: cover;
+}
+
+.card-signin .donate_img{
+    width: 100%;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.donate_info{
+    padding: 20px;
+    background-color:rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    width: 70%;
+    text-align: center;
+}
+
+.donate_img h1{
+    color: #ebebeb;
+    font-size: 6vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+}
+
+.donate_img p{
+    color: #a1a1a1;
+    font-size: 3vw;
 }
 
 .small_img{
