@@ -220,6 +220,25 @@ body {
     color: #777;
 }
 
+.edit_btn{
+    margin: 20px;
+    background-color:  #577772;;
+}
+
+.edit_row{
+    display: flex;
+    justify-content: space-between;
+}
+
+#edit_input{
+    margin: 10px 5px;
+    height: 40px;
+    font-size: 25px;
+    padding: 2px 8px;
+    color: gray;
+}
+
+
 .btn-google {
     color: white;
     background-color: #ea4335;
@@ -345,4 +364,14 @@ body {
 .profile-head .nav-tabs .nav-link.active{
     border: none;
     border-bottom:2px solid #577772;
+}
+
+.messages{
+    color: red;
+}
+
+/* Styling for MAP */
+
+.map{
+    
 }

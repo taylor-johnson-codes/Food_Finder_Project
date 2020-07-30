@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Hello, world!</title>
+    {% load static %}	
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
+            <a class="navbar-brand" href="">{{ user.first_name }} - Edit Your Info</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Back to Profile Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-lg-11 col-xl-10 mx-auto">
+                <div class="card">
+                <div class="row profile_row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <ul class="messages">    
+                                {% for message in messages %}   
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>  
+                                {% endfor %}
+                            </ul>
+                            <form action="/update_profile" method="POST" id="edit_form">
+                                {% csrf_token %}
+                                <div class="edit_row">
+                                    <h3>First Name: </h3>
+                                    <input type="text" name="first_name" id="edit_input" value="{{ user.first_name }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Last Name: </h3>
+                                    <input type="text" name="last_name" id="edit_input" value="{{ user.last_name }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Email: </h3>
+                                    <input type="email" name="email" id="edit_input" value="{{ user.email }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Phone: </h3>
+                                    <input type="text" name="phone" id="edit_input" value="{{ user.phone }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Zip Code: </h3>
+                                    <input type="text" name="zipcode" id="edit_input" value="{{ user.zipcode }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>New Password: </h3>
+                                    <input type="password" name="password" id="edit_input" value="{{ user.password }}">
+                                </div>
+                                <div class="edit_row">
+                                    <h3>Confirm New Password: </h3>
+                                    <input type="password" name="confirm_password" id="edit_input" value="{{ user.password }}">
+                                </div>
+                                <button class="btn btn-lg btn-secondary btn-block text-uppercase edit_btn" type="submit">Update</button>
+                            </form>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>

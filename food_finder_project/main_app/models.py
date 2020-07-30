@@ -25,13 +25,11 @@ class UserManager(models.Manager):
         elif postData['phone'].isdigit() == False:
             errors['phone_digit'] = "Phone number can only consist of numbers."
         if len(postData['zipcode']) < 5:
-            errors['city'] = "Zip code needs to be at least 5 numbers."
-        elif postData['zipcode'].isdigit() == False:
-            errors['zipcode_digit'] = "Zip code can only consist of numbers."
+            errors['city'] = "Zip code needs to be at least 5 characters."
         if len(postData['password']) < 8:
             errors['password'] = "Password needs to be at least 8 characters."
         if postData['password'] != postData['confirm_password']:
-            errors['confirm'] = "Password and Confirm PW don't match."
+            errors['confirm'] = "Password and confirm password don't match."
         return errors
 
 class User(models.Model):
@@ -44,6 +42,7 @@ class User(models.Model):
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class GoogleMapsClient(object):
     lat = None
@@ -112,3 +111,10 @@ class GoogleMapsClient(object):
             return {}
         return r.json()
     
+=======
+class Upload(models.Model):
+    file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
+    image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
