@@ -103,5 +103,8 @@ def logout(request):
     request.session.clear()
     return redirect('/')
 
+def search(request):
+    return render(request, 'search.html')
+  
 def donate(request):
     return render(request, 'donate.html')
