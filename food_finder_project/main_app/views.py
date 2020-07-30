@@ -96,3 +96,6 @@ def update_profile(request):
 def logout(request):
     request.session.clear()
     return redirect('/')
+
+def search(request):
+    return render(request, 'search.html')

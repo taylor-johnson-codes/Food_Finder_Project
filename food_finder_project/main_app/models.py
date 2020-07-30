@@ -3,7 +3,7 @@ import re
 import requests
 from urllib.parse import urlencode, urlparse, parse_qsl
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-GOOGLE_API_KEY = "AIzaSyCd8nw9U0nv_8yIj-u_E8gOFLK8xfqnCWI"
+GOOGLE_API_KEY = "AIzaSyA_vt4l6ctQUT17lxgjvF2T_JRHTdb310I"
 
 class UserManager(models.Manager): 
     def validate_registration(self, postData):
@@ -111,7 +111,6 @@ class GoogleMapsClient(object):
             return {}
         return r.json()
     
-=======
 class Upload(models.Model):
     file_name = models.CharField(max_length=100, default=None, blank=True, null=True)
     image = models.ImageField(upload_to="profile_picture", default=None, blank=True, null=True)
