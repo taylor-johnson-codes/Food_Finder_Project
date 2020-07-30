@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import *
 import bcrypt
+import uuid
 
 def index(request):
     return render(request, 'index.html')
@@ -55,10 +56,20 @@ def profile(request):
         return redirect('/login')
     else:
         user = User.objects.get(id=request.session['user_id'])
+        pictures = Upload.objects.all()
         context = {
             'user': user,
+            'pictures' : pictures
         }
         return render(request, 'profile.html', context)
+
+def change_picture(request):
+    file_name = request.FILES["upload_image"].name
+    request.FILES["upload_image"].name = "{}.{}".format(uuid.uuid4().hex, file_name.split(".")[-1])
+    image = request.FILES["upload_image"]
+    uploaded_by = User.objects.get(id=request.session['user_id'])
+    Upload.objects.create(file_name=file_name, image=image, uploaded_by=uploaded_by)
+    return redirect("/profile")
 
 def edit_profile(request):
     user = User.objects.get(id=request.session['user_id'])
