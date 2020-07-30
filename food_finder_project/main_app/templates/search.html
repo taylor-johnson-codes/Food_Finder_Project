@@ -6,7 +6,8 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <style>
-    /*  Set the map height explicitly to define the size of the div element that contains the map. */
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
     #map {
       height: 100%;
       background-color: grey;
@@ -16,64 +17,71 @@
     html,
     body {
       height: 500px;
-      width: 700px;
-      margin: 100;
+      width: 500px;
+      margin: 0;
       padding: 0;
     }
-    /* Make a generic sidebar */
+
+    /*  Generic sidebar */
     #panel {
-    height: 100%;
-    width: null;
-    background-color: white;
-    position: fixed;
-    z-index: 1;
-    overflow-x: hidden;
-    transition: all .2s ease-out;
-}
+      height: 100%;
+      width: null;
+      background-color: white;
+      position: fixed;
+      z-index: 1;
+      overflow-x: hidden;
+      transition: all .2s ease-out;
+    }
 
-.open {
-    width: 250px;
-}
+    .open {
+      width: 250px;
+    }
 
-/* Styling for place details */
-.hero {
-    width: 100%;
-    height: auto;
-    max-height: 166px;
-    display: block;
-}
+    /* Styling for place details */
+    .hero {
+      width: 100%;
+      height: auto;
+      max-height: 166px;
+      display: block;
+    }
 
-.place,
-p {
-    font-family: 'open sans', arial, sans-serif;
-    padding-left: 18px;
-    padding-right: 18px;
-}
+    .place,
+    p {
+      font-family: 'open sans', arial, sans-serif;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
 
-.details {
-    color: darkslategrey;
-}
+    .details {
+      color: darkslategrey;
+    }
 
-a {
-    text-decoration: none;
-    color: cadetblue;
-}
+    a {
+      text-decoration: none;
+      color: cadetblue;
+    }
+    #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
   </style>
 </head>
 
 <body>
-    <div id="search" class="row">
-        <div class="col-md-6">
-            <h3>Find your local food bank</h3>
-        </div>
-        <div class="col-md-6">
-            <form action="" method="POST">
-                <label for="zip_code">Zip Code</label>
-                <input type="text" id="zip_code" name="zip_code">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    </div>
+    <div id="floating-panel">
+        <input id="address" type="textbox" value="Charlotte, NC" />
+        <input id="submit" type="button" value="City or Zip Code" />
+      </div>
+      <div id="map"></div>
 
   <!-- Add a sidebar -->
   <div id="panel"></div>
@@ -148,8 +156,6 @@ function handleLocationError(browserHasGeolocation, infoWindow) {
     getNearbyPlaces(pos);
 }
     /* Geolocate your user */
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vt4l6ctQUT17lxgjvF2T_JRHTdb310I&libraries=places&callback=initMap">
     </script>
 
 <script>
@@ -260,16 +266,13 @@ function showPanel(placeResult) {
     // Open the infoPane
     infoPane.classList.add("open");
 }
-/* Display a Place Photo with the Place Details */
+//Geocode listener
 
-if (placeResult.photos != null) {
-    let firstPhoto = placeResult.photos[0];
-    let photo = document.createElement('img');
-    photo.classList.add('hero');
-    photo.src = firstPhoto.getUrl();
-    infoPane.appendChild(photo);
-}
 </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vt4l6ctQUT17lxgjvF2T_JRHTdb310I&libraries=places&callback=initMap">
+</script>
+
 
 </body>
 

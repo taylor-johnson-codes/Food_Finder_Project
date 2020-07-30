@@ -99,3 +99,6 @@ def logout(request):
 
 def search(request):
     return render(request, 'search.html')
+
+def zipsearch(request):
+    return render(request, 'zipsearch.html')

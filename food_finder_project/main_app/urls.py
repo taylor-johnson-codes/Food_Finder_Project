@@ -14,4 +14,5 @@ urlpatterns = [
     path('update_profile', views.update_profile),
     path('logout', views.logout),
     path('search', views.search),
+    path('zipsearch', views.zipsearch),
 ]
