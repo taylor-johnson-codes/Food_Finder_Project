@@ -454,6 +454,11 @@ body {
     color: red;
 }
 
+.profile_row{
+    display: flex;
+    justify-content: space-evenly;
+}
+
 /* Styling for MAP */
 
 .map{
