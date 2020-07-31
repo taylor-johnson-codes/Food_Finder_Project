@@ -3,6 +3,11 @@ from django.contrib import messages
 from .models import *
 import bcrypt
 import uuid
+import stripe
+stripe.api_key = "sk_test_51HAqUDDoKNbVzjhL68N7W2SW5fqholag7JTD8q89HrImiHmomRlFQfYnHPTGPl7gNC8pHVtbq1hLmuI9H3ZjUlSX00v3BF6FXG"
+
+# need to pip install pillow
+# need to pip install stripe
 
 def index(request):
     return render(request, 'index.html')
@@ -128,4 +133,26 @@ def zipsearch(request):
     return render(request, 'zipsearch.html')
 
 def donate(request):
-    return render(request, 'donate.html')
+    return render(request, 'donate_testpage.html')
+
+def charge(request):
+    # amount = float(request.POST['amount'])
+    amount = "${:,.2f}".format(float(request.POST['amount']))
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+    email = request.POST['email']
+    new_donator = Donator.objects.create(amount=amount, first_name=first_name, last_name=last_name, email=email)
+    donator_id = new_donator.id
+    return redirect('/thank_you/' + str(donator_id))
+
+def thank_you(request, donator_id):
+    donator = Donator.objects.get(id=donator_id)
+    context = {
+        'donator' : donator
+    }
+    return render(request, 'thank_you.html', context)
+
+def delete_db(request):
+    all_donators = Donator.objects.all()
+    all_donators.delete()
+    return redirect('/')
