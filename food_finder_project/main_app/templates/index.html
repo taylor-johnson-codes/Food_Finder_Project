@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Food Bank Finder</title>
+    <title>Hello, world!</title>
     {% load static %}	
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- font awesome  -->
     <script src="https://kit.fontawesome.com/4f5d3dd37a.js" crossorigin="anonymous"></script>
+    
+    
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
@@ -23,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">Find a Food Bank</a>
+                        <a class="nav-link" href="">Find a Food Bank</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#mission">Mission</a>
@@ -46,8 +48,8 @@
 
         <div id="search" class="row">
             <div class="col-md-6">
-                <i class="fas fa-map-marker-alt fa-2x">&nbsp;&nbsp;</i>
-                <a class="search-link" href="/search"target="_blank">Find your local food bank</a>
+                <i class="fas fa-map-marker-alt fa-2x"></i>
+                <a href="/search" target="_blank" class="find_a"><h3>Find your local food bank</h3></a>
             </div>
             <div class="col-md-6">
                 <form action="" method="POST">
@@ -58,8 +60,205 @@
                 </form>
             </div>
         </div>
-        <div id="map" class="col-lg-9">   
-            <h1>MAP</h1>
+        <div id="location" class="row">
+            <div class="col-md-12">
+
+                <div id="map" >
+                </div>
+                
+                <script>
+                /* Note: This requires that you consent to location sharing when prompted by your browser.*/
+                let pos;
+                let map;
+                let bounds;
+                let infoWindow;
+                let currentInfoWindow;
+                let service;
+                let infoPane;
+                function initMap() {
+                    // Initialize variables
+                    bounds = new google.maps.LatLngBounds();
+                    infoWindow = new google.maps.InfoWindow;
+                    currentInfoWindow = infoWindow;
+                    /* Add a sidebar */
+                    infoPane = document.getElementById('panel');
+
+                    // Try HTML5 geolocation
+                    if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                        };
+                        map = new google.maps.Map(document.getElementById('map'), {
+                        center: pos,
+                        zoom: 15
+                        });
+                        bounds.extend(pos);
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('Location found.');
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+
+                        /* Call the Places Nearby Search */
+                        getNearbyPlaces(pos);
+                    }, () => {
+                        // Browser supports geolocation, but user has denied permission
+                        handleLocationError(true, infoWindow);
+                    });
+                    } else {
+                    // Browser doesn't support geolocation
+                    handleLocationError(false, infoWindow);
+                    }
+                }
+
+                // Handle a geolocation error
+                function handleLocationError(browserHasGeolocation, infoWindow) {
+                    // Set default location to Sydney, Australia
+                    pos = {lat: -33.856, lng: 151.215};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                    center: pos,
+                    zoom: 15
+                    });
+
+                    // Display an InfoWindow at the map center
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent(browserHasGeolocation ?
+                    'Geolocation permissions denied. Using default location.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+                    infoWindow.open(map);
+                    currentInfoWindow = infoWindow;
+
+                    /* Call the Places Nearby Search */
+                    getNearbyPlaces(pos);
+                }
+                    /* Geolocate your user */
+                    </script>
+
+                <script>
+                function getNearbyPlaces(position) {
+                    let request = {
+                    location: position,
+                    rankBy: google.maps.places.RankBy.DISTANCE,
+                    keyword: 'food bank'
+                    };
+
+                    service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch(request, nearbyCallback);
+                }
+
+                // Handle the results (up to 20) of the Nearby Search
+                function nearbyCallback(results, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    createMarkers(results);
+                    }
+                }
+                /* Generate markers for search results */
+                // Set markers at the location of each place result
+                function createMarkers(places) {
+                    places.forEach(place => {
+                    let marker = new google.maps.Marker({
+                        position: place.geometry.location,
+                        map: map,
+                        title: place.name
+                    });
+
+                    /* Add click listeners to the markers */
+                    google.maps.event.addListener(marker, 'click', () => {
+                    let request = {
+                    placeId: place.place_id,
+                    fields: ['name', 'formatted_address', 'geometry', 'rating',
+                        'website', 'photos']
+                    };
+
+                    /* Fetch the details of a place when the user clicks on a marker. */
+                    service.getDetails(request, (placeResult, status) => {
+                    showDetails(placeResult, marker, status)
+                    });
+                });
+
+                    // Adjust the map bounds to include the location of this marker
+                    bounds.extend(place.geometry.location);
+                    });
+                    /* Once all the markers have been placed, adjust the bounds of the map to */
+                    map.fitBounds(bounds);
+                }
+
+                /* Show place details in an info window */
+                function showDetails(placeResult, marker, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    let placeInfowindow = new google.maps.InfoWindow();
+                    placeInfowindow.setContent('<div><strong>' + placeResult.name +
+                        '</strong><br>' + 'Rating: ' + placeResult.rating + '</div>');
+                    placeInfowindow.open(marker.map, marker);
+                    currentInfoWindow.close();
+                    currentInfoWindow = placeInfowindow;
+                    showPanel(placeResult);
+                    } else {
+                    console.log('showDetails failed: ' + status);
+                    }
+                }
+
+                /* Load place details in a sidebar */
+                // Displays place details in a sidebar
+                function showPanel(placeResult) {
+                    // If infoPane is already open, close it
+                    if (infoPane.classList.contains("open")) {
+                    infoPane.classList.remove("open");
+                    }
+
+                    // Clear the previous details
+                    while (infoPane.lastChild) {
+                    infoPane.removeChild(infoPane.lastChild);
+                    }
+
+                    /* Display a Place Photo with the Place Details */
+
+                    // Add place details with text formatting
+                    let name = document.createElement('h1');
+                    name.classList.add('place');
+                    name.textContent = placeResult.name;
+                    infoPane.appendChild(name);
+                    if (placeResult.rating != null) {
+                    let rating = document.createElement('p');
+                    rating.classList.add('details');
+                    rating.textContent = `Rating: ${placeResult.rating} \u272e`;
+                    infoPane.appendChild(rating);
+                    }
+                    let address = document.createElement('p');
+                    address.classList.add('details');
+                    address.textContent = placeResult.formatted_address;
+                    infoPane.appendChild(address);
+                    if (placeResult.website) {
+                    let websitePara = document.createElement('p');
+                    let websiteLink = document.createElement('a');
+                    let websiteUrl = document.createTextNode(placeResult.website);
+                    websiteLink.appendChild(websiteUrl);
+                    websiteLink.title = placeResult.website;
+                    websiteLink.href = placeResult.website;
+                    websitePara.appendChild(websiteLink);
+                    infoPane.appendChild(websitePara);
+                    }
+
+                    // Open the infoPane
+                    infoPane.classList.add("open");
+                }
+                //Geocode listener
+
+                </script>
+
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vt4l6ctQUT17lxgjvF2T_JRHTdb310I&libraries=places&callback=initMap">
+                </script>
+                <div id="floating-panel">
+                    <h3>Click a place for details</h3>
+                </div>
+            </div>
+        </div>
+        <div>
+            <form action="/search" target="_blank" method="GET">
+                <button class="btn btn-lg btn-secondary btn-block text-uppercase">View Full Map For Food Bank Details</button>
+            </form>
         </div>
         <a name="mission">
             <div id="mission" class="row">
@@ -80,9 +279,6 @@
             <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-3x"></i></a>
             <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
         </div>
-
-
-        
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

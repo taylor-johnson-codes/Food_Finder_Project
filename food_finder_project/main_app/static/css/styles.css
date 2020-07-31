@@ -73,9 +73,8 @@ nav li{
 
 #location{
     background-color: rgb(194, 194, 194);
-    padding: 60px;
-    height: 550px;
-    display: flex;
+    padding: 30px 20px;
+    height: 400px;
 }
 
 #contact_us{
@@ -531,4 +530,72 @@ a:hover{
     height: 100%;
     margin: 0px;
     padding: 0px;
+}
+
+#map {
+    height: 100%;
+    background-color: grey;
+  }
+  /*  Generic sidebar */
+  #panel {
+    height: 100%;
+    width: null;
+    background-color: white;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: all .2s ease-out;
+  }
+
+  .open {
+    width: 250px;
+  }
+
+  /* Styling for place details */
+  .hero {
+    width: 100%;
+    height: auto;
+    max-height: 166px;
+    display: block;
+  }
+
+  .place,
+  p {
+    font-family: 'Oswald', sans-serif;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .details {
+    color: darkslategrey;
+  }
+
+  a {
+    text-decoration: none;
+    color: cadetblue;
+  }
+
+  #floating-panel {
+  position: absolute;
+  bottom: 35px;
+  left: 5%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  text-align: center;
+  line-height: 30px;
+  padding-left: 10px;
+  color: white;
+  font-family: 'Oswald', sans-serif;
+}
+
+.find_a{
+    color: white;
+}
+
+.full_map_btn{
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 10px;
 }

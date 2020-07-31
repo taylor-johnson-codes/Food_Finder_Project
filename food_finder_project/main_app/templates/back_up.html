@@ -49,7 +49,7 @@
         <div id="search" class="row">
             <div class="col-md-6">
                 <i class="fas fa-map-marker-alt fa-2x"></i>
-                <h3>Find your local food bank</h3>
+                <a href="/search" class="find_a"><h3>Find your local food bank</h3></a>
             </div>
             <div class="col-md-6">
                 <form action="" method="POST">
@@ -60,6 +60,206 @@
                 </form>
             </div>
         </div>
+        <div id="location" class="row">
+            <div class="col-md-12">
+
+                <div id="map" >
+                </div>
+                
+                <script>
+                /* Note: This requires that you consent to location sharing when prompted by your browser.*/
+                let pos;
+                let map;
+                let bounds;
+                let infoWindow;
+                let currentInfoWindow;
+                let service;
+                let infoPane;
+                function initMap() {
+                    // Initialize variables
+                    bounds = new google.maps.LatLngBounds();
+                    infoWindow = new google.maps.InfoWindow;
+                    currentInfoWindow = infoWindow;
+                    /* Add a sidebar */
+                    infoPane = document.getElementById('panel');
+
+                    // Try HTML5 geolocation
+                    if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                        };
+                        map = new google.maps.Map(document.getElementById('map'), {
+                        center: pos,
+                        zoom: 15
+                        });
+                        bounds.extend(pos);
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('Location found.');
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+
+                        /* Call the Places Nearby Search */
+                        getNearbyPlaces(pos);
+                    }, () => {
+                        // Browser supports geolocation, but user has denied permission
+                        handleLocationError(true, infoWindow);
+                    });
+                    } else {
+                    // Browser doesn't support geolocation
+                    handleLocationError(false, infoWindow);
+                    }
+                }
+
+                // Handle a geolocation error
+                function handleLocationError(browserHasGeolocation, infoWindow) {
+                    // Set default location to Sydney, Australia
+                    pos = {lat: -33.856, lng: 151.215};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                    center: pos,
+                    zoom: 15
+                    });
+
+                    // Display an InfoWindow at the map center
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent(browserHasGeolocation ?
+                    'Geolocation permissions denied. Using default location.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+                    infoWindow.open(map);
+                    currentInfoWindow = infoWindow;
+
+                    /* Call the Places Nearby Search */
+                    getNearbyPlaces(pos);
+                }
+                    /* Geolocate your user */
+                    </script>
+
+                <script>
+                function getNearbyPlaces(position) {
+                    let request = {
+                    location: position,
+                    rankBy: google.maps.places.RankBy.DISTANCE,
+                    keyword: 'food bank'
+                    };
+
+                    service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch(request, nearbyCallback);
+                }
+
+                // Handle the results (up to 20) of the Nearby Search
+                function nearbyCallback(results, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    createMarkers(results);
+                    }
+                }
+                /* Generate markers for search results */
+                // Set markers at the location of each place result
+                function createMarkers(places) {
+                    places.forEach(place => {
+                    let marker = new google.maps.Marker({
+                        position: place.geometry.location,
+                        map: map,
+                        title: place.name
+                    });
+
+                    /* Add click listeners to the markers */
+                    google.maps.event.addListener(marker, 'click', () => {
+                    let request = {
+                    placeId: place.place_id,
+                    fields: ['name', 'formatted_address', 'geometry', 'rating',
+                        'website', 'photos']
+                    };
+
+                    /* Fetch the details of a place when the user clicks on a marker. */
+                    service.getDetails(request, (placeResult, status) => {
+                    showDetails(placeResult, marker, status)
+                    });
+                });
+
+                    // Adjust the map bounds to include the location of this marker
+                    bounds.extend(place.geometry.location);
+                    });
+                    /* Once all the markers have been placed, adjust the bounds of the map to */
+                    map.fitBounds(bounds);
+                }
+
+                /* Show place details in an info window */
+                function showDetails(placeResult, marker, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    let placeInfowindow = new google.maps.InfoWindow();
+                    placeInfowindow.setContent('<div><strong>' + placeResult.name +
+                        '</strong><br>' + 'Rating: ' + placeResult.rating + '</div>');
+                    placeInfowindow.open(marker.map, marker);
+                    currentInfoWindow.close();
+                    currentInfoWindow = placeInfowindow;
+                    showPanel(placeResult);
+                    } else {
+                    console.log('showDetails failed: ' + status);
+                    }
+                }
+
+                /* Load place details in a sidebar */
+                // Displays place details in a sidebar
+                function showPanel(placeResult) {
+                    // If infoPane is already open, close it
+                    if (infoPane.classList.contains("open")) {
+                    infoPane.classList.remove("open");
+                    }
+
+                    // Clear the previous details
+                    while (infoPane.lastChild) {
+                    infoPane.removeChild(infoPane.lastChild);
+                    }
+
+                    /* Display a Place Photo with the Place Details */
+
+                    // Add place details with text formatting
+                    let name = document.createElement('h1');
+                    name.classList.add('place');
+                    name.textContent = placeResult.name;
+                    infoPane.appendChild(name);
+                    if (placeResult.rating != null) {
+                    let rating = document.createElement('p');
+                    rating.classList.add('details');
+                    rating.textContent = `Rating: ${placeResult.rating} \u272e`;
+                    infoPane.appendChild(rating);
+                    }
+                    let address = document.createElement('p');
+                    address.classList.add('details');
+                    address.textContent = placeResult.formatted_address;
+                    infoPane.appendChild(address);
+                    if (placeResult.website) {
+                    let websitePara = document.createElement('p');
+                    let websiteLink = document.createElement('a');
+                    let websiteUrl = document.createTextNode(placeResult.website);
+                    websiteLink.appendChild(websiteUrl);
+                    websiteLink.title = placeResult.website;
+                    websiteLink.href = placeResult.website;
+                    websitePara.appendChild(websiteLink);
+                    infoPane.appendChild(websitePara);
+                    }
+
+                    // Open the infoPane
+                    infoPane.classList.add("open");
+                }
+                //Geocode listener
+
+                </script>
+
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vt4l6ctQUT17lxgjvF2T_JRHTdb310I&libraries=places&callback=initMap">
+                </script>
+                <div id="floating-panel">
+                    <h3>Click a place for details</h3>
+                </div>
+            </div>
+        </div>
+        <div>
+            <form action="/search" method="GET">
+                <button class="btn btn-lg btn-secondary btn-block text-uppercase">View Full Map For Food Bank Details</button>
+            </form>
+        </div>
         <a name="mission">
             <div id="mission" class="row">
                 <div id="mission_icon" class="col-sm-3">
@@ -67,63 +267,10 @@
                 </div>
                 <div id="mission_info" class="col-sm-9">
                     <h2>MISSION</h2>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                    <p>Linking Americans in need to food resources.</p>
                 </div>       
             </div>
         </a>
-        <div id="location" class="row">
-            <div id="map" class="col-lg-12">
-                <h1>MAP HERE</h1>
-                <script>
-                    var map;
-                    function initMap(){
-                        var center = new google.maps.LatLng(47.6131746, -122.4821484);
-                        map = new google.maps.Map(document.getElementById('map'), {
-                            center: center,
-                            zoom:10,
-                        });
-                        // var options = {
-                        //     zoom:10,
-                        //     center: {lat:47.6131746,lng:-122.4821484}
-                        // }
-
-                        var request = {
-                            location: center,
-                            radius: 8047,
-                            types: ['cafe'],
-                        };
-                        var service = new google.maps.places.PlacesService(map);
-
-                        service.nearbySearch(request, callback);
-
-                        // var map = new google.maps.Map(document.getElementById('map'), options);
-
-                        // var marker = new google.maps.Marker({
-                        //     position:{lat:47.6131746,lng:-122.4821484},
-                        //     map:map
-                        // })
-                    }
-                    function callback(results, status) {
-                        if (status == google.maps.places.PlacesServiceStatus.OK){
-                            for (var i = 0; i < results.length; i++) {
-                                createMarker(results[i]);
-                            }
-                        }
-                    }
-
-                    function createMarker(place){
-                        var placeLoc = place.geometry.location;
-                        var marker = new google.maps.Marker({
-                            map:map,
-                            position: place.geometry.location,
-                        });
-                    }
-                    google.maps.event.addDomListerner(window, 'load', initialize);
-                    
-                </script>
-                <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi6dQpTwc2ykp7quxsZyhxirtF4OPf2Yw&callback=initMap"></script>
-            </div>
-        </div>
         <div id="contact_us">
             <h4>CONTACT US:</h4>
             <a href="mailto:yan.kwok.b@gmail.com" target="_blank"><i class="far fa-envelope fa-3x"></i>
