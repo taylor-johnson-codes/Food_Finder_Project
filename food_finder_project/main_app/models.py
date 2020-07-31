@@ -125,5 +125,3 @@ class Upload(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    return r.json()
-

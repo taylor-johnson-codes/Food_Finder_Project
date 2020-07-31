@@ -7,7 +7,6 @@
         
 }
 
-
 nav{
     font-weight: 700;
 }
@@ -461,6 +460,30 @@ body {
 
 /* Styling for MAP */
 
-.map{
+/* #map {
     
+    } */
+
+/* .map-container-5{
+    overflow:hidden;
+    position:relative;
+    height:0;
+    }
+
+    .map-container-5 iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+    } */
+
+.search-link{
+    color: white;
+    font-size: 50px;
+}
+
+a:hover{
+    text-decoration: none;
+    color: #7d9b97;
 }
