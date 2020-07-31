@@ -16,5 +16,9 @@ urlpatterns = [
     path('logout', views.logout),
     path('search', views.search),
     path('zipsearch', views.zipsearch),
+    path('donate', views.donate),
+    path('charge', views.charge),
+    path('thank_you/<int:donator_id>', views.thank_you),
+    path('delete_db', views.delete_db),
     path('backup', views.backup),
 ]
