@@ -36,11 +36,10 @@
                 <div class="row profile_row">
                     <div class="col-md-4">
                         <div class="profile-img" id="edit_profile-img">
-                            {% if user.profile_pic is None %}
-                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" 
-                                alt=""/ id="profile_picture">
+                            {% if user.profile_pic.all|length is 0 %}
+                            <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
                             {% else %}
-                                <img src="{{MEDIA_URL}}{{picture.image}}" alt="" id="profile_picture"> 
+                            <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
                             {% endif %}
                             <form action="/change_picture" method="post" enctype="multipart/form-data" id="edit_profile_img_form" class="btn">
                                 {% csrf_token %}
@@ -70,6 +69,10 @@
                                     <input type="text" name="last_name" id="edit_input" value="{{ user.last_name }}">
                                 </div>
                                 <div class="edit_row">
+                                    <h3>Email: </h3>
+                                    <input type="text" name="email" id="edit_input" value="{{ user.email }}">
+                                </div>
+                                <div class="edit_row">
                                     <h3>Phone: </h3>
                                     <input type="text" name="phone" id="edit_input" value="{{ user.phone }}">
                                 </div>
@@ -85,12 +88,15 @@
                                     <h3>Confirm New Password: </h3>
                                     <input type="password" name="confirm_password" id="edit_input" value="{{ user.password }}">
                                 </div>
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
                                 <button class="btn btn-lg btn-secondary btn-block text-uppercase edit_btn" type="submit">Update</button>
                             </form>
                             </ul>
                         </div>
                     </div>
                     <form action="/delete" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
                         <button class="btn btn-lg btn-secondary btn-block text-uppercase edit_btn btn_delete" type="submit" onclick="return confirm('Are you sure you want to delete your account completely?');">Delete Account</button>
                     </form>
                 </div>
