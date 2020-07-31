@@ -100,7 +100,7 @@ nav li{
     background-color: #324b48;
     background-image: url("volunteer_title_img.jpg");
     background-repeat: no-repeat;
-    height: 500px;
+    height: 400px;
     background-size: cover;
     color: rgb(214, 214, 214);
     display: flex;
@@ -204,9 +204,9 @@ body {
 
 .donate_info{
     padding: 20px;
-    background-color:rgba(0, 0, 0, 0.6);
+    background-color:rgba(41, 41, 41, 0.6);
     border-radius: 20px;
-    width: 70%;
+    width: 90%;
     text-align: center;
 }
 
@@ -218,7 +218,7 @@ body {
 }
 
 .donate_img p{
-    color: #a1a1a1;
+    color: #73ceb7;
     font-size: 3vw;
 }
 
@@ -598,4 +598,59 @@ a:hover{
     font-family: 'Oswald', sans-serif;
     text-align: center;
     font-size: 10px;
+}
+
+/* for donate page */
+
+.donate_info p{
+    margin-bottom: 20px;
+}
+.form-row{
+    margin-left: 16%;
+}
+
+#donate_input{
+    padding: 3px;
+    border-radius: 8px;
+}
+
+.card_label{
+    color: white;
+    text-align: center;
+}
+
+.StripeElement {
+    box-sizing: border-box;
+
+    height: 40px;
+    width: 80%;
+    padding: 10px 12px;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: white;
+
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+    border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;}
+
+#donate_btn{
+    width: 30%;
+    background-color: #4f8f85;
+}
+
+#donate_h1{
+    font-size: 3vw;
 }

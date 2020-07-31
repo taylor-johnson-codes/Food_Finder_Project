@@ -136,6 +136,9 @@ def zipsearch(request):
 
 def donate(request):
     return render(request, 'donate_testpage.html')
+    
+def donate2(request):
+    return render(request, 'donate_testpage2.html')
 
 def charge(request):
     # amount = float(request.POST['amount'])

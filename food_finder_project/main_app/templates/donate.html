@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="">Find a Food Bank</a>
+                        <a class="nav-link" href="/search" target="_blank">Find a Food Bank</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/#mission">Mission</a>
@@ -37,8 +37,9 @@
                 <div class="card card-signin flex-row my-5">
                     <div class="card-img-left d-sm-flex donate_img">
                         <div class="donate_info">
-                            <h1>DONATE</h1>
-                            <p>Your donations help us grow stronger</p>
+                            <<h1>Thank you, {{ donator.first_name }} {{ donator.last_name }}, for your donation of {{ donator.amount }}!</h1>
+                            <p>A receipt has been emailed to {{ donator.email }}.</p>
+                            <a href="/">Return to Main Page</a>
                         </div>
                     <!-- Background image for card set in CSS! -->
                     </div>
@@ -49,3 +50,21 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     </body>
+
+
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you!</title>
+</head>
+<body>
+    <h1>Thank you, {{ donator.first_name }} {{ donator.last_name }}, for your donation of {{ donator.amount }}!</h1>
+    <p>A receipt has been emailed to {{ donator.email }}.</p>
+    <a href="/">Return to Main Page</a>
+</body>
+</html>
