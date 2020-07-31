@@ -18,8 +18,6 @@ class UserManager(models.Manager):
             errors['last_name_alpha'] = "Last name needs to be letters only."
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Invalid email format."
-        elif User.objects.filter(email = postData['email']):
-            errors['email_exists'] = "Email already exists in database."
         if len(postData['phone']) < 10:
             errors['phone'] = "Phone number needs to be at least 10 numbers."
         elif postData['phone'].isdigit() == False:
@@ -117,4 +115,3 @@ class GoogleMapsClient(object):
             return {}
 
         return r.json()
-    

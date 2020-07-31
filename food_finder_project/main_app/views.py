@@ -47,14 +47,13 @@ def process_login(request):
             messages.error(request, "Invalid credentials.")
             return redirect('/login')
     else:
-        messages.error(request, "Email doesn't exist in the database. Try again or register.")
+        messages.error(request, "Email doesn't exist in the database. Try again or sign up.")
         return redirect('/login')
 
 def profile(request):
     if not "user_id" in request.session:
         messages.error(request, "You must be logged in to see your profile.")
         return redirect('/login')
-    
     else:
         user = User.objects.get(id=request.session['user_id'])
         # check user.profile.len if 0 use dummy. if >0 use
@@ -62,7 +61,6 @@ def profile(request):
             pictures = user.profile_pic.all()
         else:
             pictures = user.profile_pic.all()[0]
-
         context = {
             'user': user,
             'picture' : pictures,
@@ -82,18 +80,15 @@ def change_picture(request):
 
 def edit_profile(request):
     user = User.objects.get(id=request.session['user_id'])
-    user = User.objects.get(id=request.session['user_id'])
         # check user.profile.len if 0 use dummy. if >0 use
     if len(user.profile_pic.all()) == 0:
         pictures = user.profile_pic.all()
     else:
         pictures = user.profile_pic.all()[0]
-
     context = {
         'user': user,
         'picture' : pictures,
     }
-
     return render(request, 'edit_profile.html', context)
 
 def update_profile(request):
@@ -103,19 +98,23 @@ def update_profile(request):
             messages.error(request, value)
         return redirect('/edit_profile')
     else:
+        user_id = request.POST['user_id']
         user = User.objects.get(id=user_id)
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
         user.phone = request.POST['phone']
         user.zipcode = request.POST['zipcode']
         user.password = request.POST['password']
-        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        pw_hash = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
         user.save()
         return redirect('/profile')
 
 def delete(request):
+    user_id = request.POST['user_id']
     user = User.objects.get(id=user_id)
     user.delete()
+    request.session.clear()
     return redirect('/')
 
 def logout(request):
@@ -127,6 +126,6 @@ def search(request):
 
 def zipsearch(request):
     return render(request, 'zipsearch.html')
-  
+
 def donate(request):
     return render(request, 'donate.html')
