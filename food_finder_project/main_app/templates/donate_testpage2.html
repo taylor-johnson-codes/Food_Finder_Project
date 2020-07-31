@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <title>Hello, world!</title>
+        <!-- Stripe API code -->
+        <script src="https://js.stripe.com/v3/"></script>
+        {% load static %}	
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
+            <a class="navbar-brand" href="/">Food Bank Finder</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="href="/search" target="_blank"">Find a Food Bank</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#mission">Mission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/volunteer">Volunteer</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-sm-10 col-xl-9 mx-auto">
+                <div class="card card-signin flex-row my-5">
+                    <div class="card-img-left d-sm-flex donate_img">
+                        <div class="donate_info">
+                            <h1>DONATE</h1>
+                            <p>Your donations help us grow stronger</p>
+                            <div id="test">
+
+                                <form action="/charge" method="post" id="payment-form">
+                                    {% csrf_token %}
+                    
+                                    <div class="form-row">
+                                        <label for="card-element" class="card_label">
+                                        Enter Credit or Debit Card:
+                                        </label>
+                                        <div id="card-element">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                        </div>
+                                        <!-- Used to display form errors. -->
+                                        <div id="card-errors" role="alert"></div>
+                                    </div>
+                                    <p style="color: gray;"></p>
+                                    <input type="text" name="amount" placeholder="Donation Amount" id="donate_input">
+                                    <input type="text" name="email" placeholder="Email Address" id="donate_input">
+                                    <input type="text" name="first_name"  placeholder="First Name" id="donate_input">
+                                    <input type="text" name="last_name"  placeholder="Last Name" id="donate_input">
+                                    <p></p>
+                                    <button  class="btn btn-secondary text-uppercase" id="donate_btn">Submit Payment</button>
+                                </form>
+                        </div>
+                    <!-- Background image for card set in CSS! -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script>
+            // Create a Stripe client.
+            var stripe = Stripe('pk_test_51HAqUDDoKNbVzjhLdq1InB0ixdiV7DNTHVnRBUcM21t9rO7SG5Mskejj7UqC9frmetbObrj3QiRortBmdSVrWmtc00oFfx1QVj');
+
+            // Create an instance of Elements.
+            var elements = stripe.elements();
+
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            var style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+            };
+
+            // Create an instance of the card Element.
+            var card = elements.create('card', {style: style});
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+            // Handle real-time validation errors from the card Element.
+            card.on('change', function(event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+            });
+
+            // Handle form submission.
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                // Inform the user if there was an error.
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+                } else {
+                // Send the token to your server.
+                stripeTokenHandler(result.token);
+                }
+            });
+            });
+
+            // Submit the form with the token ID.
+            function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+            form.submit();
+            }
+        </script>
+    </body>
