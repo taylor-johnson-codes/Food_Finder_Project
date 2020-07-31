@@ -458,11 +458,45 @@ body {
     justify-content: space-evenly;
 }
 
-/* Styling for MAP */
+#profile_picture{
+    padding: 0px;
+}
+#search_input{
+    width: 70%;
+    border: 0px;
+}
+#edit_profile-img{
+    margin-top: 50px;
+}
+#edit_profile_img_form{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
 
 /* #map {
-    
-    } */
+=======
+#search_profile_pic{
+    width: 90%;
+}
+.chose_btn{
+    color: red;
+}
+
+#search_input_btn{
+    margin: 5px;
+    width: 50%;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background-color: #577772;
+    border: 0px;
+    color: white;
+}
+
+.btn_delete{
+    background-color: rgb(65, 7, 7);
+}
+/* Styling for MAP */
 
 /* .map-container-5{
     overflow:hidden;
