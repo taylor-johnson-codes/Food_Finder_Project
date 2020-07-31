@@ -20,4 +20,5 @@ urlpatterns = [
     path('charge', views.charge),
     path('thank_you/<int:donator_id>', views.thank_you),
     path('delete_db', views.delete_db),
+    path('backup', views.backup),
 ]

@@ -36,11 +36,10 @@
                 <div class="row profile_row">
                     <div class="col-md-4">
                         <div class="profile-img" id="edit_profile-img">
-                            {% if user.profile_pic is None %}
-                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" 
-                                alt=""/ id="profile_picture">
+                            {% if user.profile_pic.all|length is 0 %}
+                            <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
                             {% else %}
-                                <img src="{{MEDIA_URL}}{{picture.image}}" alt="" id="profile_picture"> 
+                            <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
                             {% endif %}
                             <form action="/change_picture" method="post" enctype="multipart/form-data" id="edit_profile_img_form" class="btn">
                                 {% csrf_token %}
