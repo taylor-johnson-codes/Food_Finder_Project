@@ -118,5 +118,3 @@ class GoogleMapsClient(object):
 
         return r.json()
     
-
-

@@ -15,5 +15,5 @@ urlpatterns = [
     path('delete', views.delete),
     path('logout', views.logout),
     path('search', views.search),
-    path('donate', views.donate),
+    path('zipsearch', views.zipsearch),
 ]

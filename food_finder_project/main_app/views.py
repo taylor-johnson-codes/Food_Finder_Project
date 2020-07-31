@@ -124,6 +124,9 @@ def logout(request):
 
 def search(request):
     return render(request, 'search.html')
+
+def zipsearch(request):
+    return render(request, 'zipsearch.html')
   
 def donate(request):
     return render(request, 'donate.html')
