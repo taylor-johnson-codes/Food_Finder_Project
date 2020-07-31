@@ -16,4 +16,5 @@ urlpatterns = [
     path('logout', views.logout),
     path('search', views.search),
     path('zipsearch', views.zipsearch),
+    path('backup', views.backup),
 ]

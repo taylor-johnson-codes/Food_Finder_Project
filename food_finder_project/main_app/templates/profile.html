@@ -40,9 +40,8 @@
                     <div class="col-md-4">
                         <div class="profile-img">
                             <div class="profile-img">
-                                {% if user.profile_pic.uploaded_by is not user %}
-                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" 
-                                alt=""/>
+                                {% if user.profile_pic.all|length is 0 %}
+                                <img src="https://starcresources.com.au/wp-content/uploads/2018/08/dummy450x450.jpg" alt=""/>
                                 {% else %}
                                 <img src="{{MEDIA_URL}}{{picture.image}}" alt=""> 
                                 {% endif %}
