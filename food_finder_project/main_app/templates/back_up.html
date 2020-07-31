@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Food Bank Finder</title>
+    <title>Hello, world!</title>
     {% load static %}	
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- font awesome  -->
     <script src="https://kit.fontawesome.com/4f5d3dd37a.js" crossorigin="anonymous"></script>
+    
+    
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-fixed-top">
@@ -23,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">Find a Food Bank</a>
+                        <a class="nav-link" href="">Find a Food Bank</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#mission">Mission</a>
@@ -46,8 +48,8 @@
 
         <div id="search" class="row">
             <div class="col-md-6">
-                <i class="fas fa-map-marker-alt fa-2x">&nbsp;&nbsp;</i>
-                <a class="search-link" href="/search"target="_blank">Find your local food bank</a>
+                <i class="fas fa-map-marker-alt fa-2x"></i>
+                <h3>Find your local food bank</h3>
             </div>
             <div class="col-md-6">
                 <form action="" method="POST">
@@ -58,9 +60,6 @@
                 </form>
             </div>
         </div>
-        <div id="map" class="col-lg-9">   
-            <h1>MAP</h1>
-        </div>
         <a name="mission">
             <div id="mission" class="row">
                 <div id="mission_icon" class="col-sm-3">
@@ -68,10 +67,63 @@
                 </div>
                 <div id="mission_info" class="col-sm-9">
                     <h2>MISSION</h2>
-                    <p>Linking Americans in need to food resources.</p>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
                 </div>       
             </div>
         </a>
+        <div id="location" class="row">
+            <div id="map" class="col-lg-12">
+                <h1>MAP HERE</h1>
+                <script>
+                    var map;
+                    function initMap(){
+                        var center = new google.maps.LatLng(47.6131746, -122.4821484);
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            center: center,
+                            zoom:10,
+                        });
+                        // var options = {
+                        //     zoom:10,
+                        //     center: {lat:47.6131746,lng:-122.4821484}
+                        // }
+
+                        var request = {
+                            location: center,
+                            radius: 8047,
+                            types: ['cafe'],
+                        };
+                        var service = new google.maps.places.PlacesService(map);
+
+                        service.nearbySearch(request, callback);
+
+                        // var map = new google.maps.Map(document.getElementById('map'), options);
+
+                        // var marker = new google.maps.Marker({
+                        //     position:{lat:47.6131746,lng:-122.4821484},
+                        //     map:map
+                        // })
+                    }
+                    function callback(results, status) {
+                        if (status == google.maps.places.PlacesServiceStatus.OK){
+                            for (var i = 0; i < results.length; i++) {
+                                createMarker(results[i]);
+                            }
+                        }
+                    }
+
+                    function createMarker(place){
+                        var placeLoc = place.geometry.location;
+                        var marker = new google.maps.Marker({
+                            map:map,
+                            position: place.geometry.location,
+                        });
+                    }
+                    google.maps.event.addDomListerner(window, 'load', initialize);
+                    
+                </script>
+                <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi6dQpTwc2ykp7quxsZyhxirtF4OPf2Yw&callback=initMap"></script>
+            </div>
+        </div>
         <div id="contact_us">
             <h4>CONTACT US:</h4>
             <a href="mailto:yan.kwok.b@gmail.com" target="_blank"><i class="far fa-envelope fa-3x"></i>
@@ -80,9 +132,6 @@
             <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-3x"></i></a>
             <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
         </div>
-
-
-        
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

@@ -73,7 +73,9 @@ nav li{
 
 #location{
     background-color: rgb(194, 194, 194);
-    padding: 30px;
+    padding: 60px;
+    height: 550px;
+    display: flex;
 }
 
 #contact_us{
@@ -520,4 +522,13 @@ body {
 a:hover{
     text-decoration: none;
     color: #7d9b97;
+}
+
+
+/* bev trying to work on map */
+
+#bev_map{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 }

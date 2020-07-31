@@ -56,6 +56,7 @@ def profile(request):
         return redirect('/login')
     else:
         user = User.objects.get(id=request.session['user_id'])
+        all_upload = Upload.objects.all()
         # check user.profile.len if 0 use dummy. if >0 use
         if len(user.profile_pic.all()) == 0:
             pictures = user.profile_pic.all()
@@ -64,6 +65,7 @@ def profile(request):
         context = {
             'user': user,
             'picture' : pictures,
+            'all_upload' : all_upload,
         }
         return render(request, 'profile.html', context)
 
@@ -129,3 +131,6 @@ def zipsearch(request):
 
 def donate(request):
     return render(request, 'donate.html')
+
+def backup(request):
+    return render(request, 'back_up.html')
